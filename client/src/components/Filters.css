@@ -1,0 +1,48 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.filters__search {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #2a2f4a;
+  background: #171b2d;
+  color: #f2f3f7;
+  font-size: 0.95rem;
+}
+
+.filters__search:focus {
+  outline: none;
+  border-color: #5b6ee8;
+}
+
+.filters__venues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filters__venue-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #2a2f4a;
+  background: #171b2d;
+  color: #b7bee0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.filters__venue-chip:hover {
+  border-color: #5b6ee8;
+}
+
+.filters__venue-chip--active {
+  background: #5b6ee8;
+  border-color: #5b6ee8;
+  color: #fff;
+}

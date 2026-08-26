@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://concerts.vatland.no/sitemap.xml

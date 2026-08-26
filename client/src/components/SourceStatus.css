@@ -1,0 +1,56 @@
+.source-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #171b2d;
+  border: 1px solid #2a2f4a;
+  border-radius: 12px;
+}
+
+.source-status__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.source-status__pill {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: #202542;
+  color: #9fd3a8;
+}
+
+.source-status__pill--error {
+  color: #f0b16b;
+  background: #2e2436;
+}
+
+.source-status__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: #8790b8;
+}
+
+.source-status__refresh {
+  padding: 0.35rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #2a2f4a;
+  background: #202542;
+  color: #f2f3f7;
+  cursor: pointer;
+}
+
+.source-status__refresh:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.source-status__refresh:hover:not(:disabled) {
+  border-color: #5b6ee8;
+}
