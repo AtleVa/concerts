@@ -3,7 +3,7 @@ const { stripHtml, truncate } = require('../utils/text');
 
 const SOURCE_ID = 'tou';
 const SOURCE_NAME = 'TOU';
-const API_BASE = 'https://www.touofficial.com/wp-json/wp/v2';
+const API_BASE = 'https://www.touofficial.com/arrangementer/wp-json/wp/v2';
 
 /**
  * TOU also runs WordPress with a custom "event" post type, but instead of
