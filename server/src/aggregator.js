@@ -5,8 +5,9 @@ const checkpointCharlie = require('./sources/checkpoint-charlie');
 const tou = require('./sources/tou');
 const stavangerKonserthus = require('./sources/stavanger-konserthus');
 const folken = require('./sources/folken');
+const dnbArena = require('./sources/dnb-arena');
 
-const SOURCES = [stavangeren, fiskepiren, checkpointCharlie, tou, stavangerKonserthus, folken];
+const SOURCES = [stavangeren, fiskepiren, checkpointCharlie, tou, stavangerKonserthus, folken, dnbArena];
 const CACHE_TTL_SECONDS = 30 * 60; // refresh at most every 30 minutes
 const CACHE_KEY = 'aggregated-events';
 

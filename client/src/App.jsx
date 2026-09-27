@@ -38,7 +38,7 @@ export default function App() {
     <div className="app">
       <header className="app__header">
         <h1>Concerts in Stavanger</h1>
-        <p>Live-aggregated concert listings from Stavangeren, Fiskepiren, Checkpoint Charlie, TOU, Stavanger konserthus &amp; Folken.</p>
+        <p>Live-aggregated concert listings from Stavangeren, Fiskepiren, Checkpoint Charlie, TOU, Stavanger konserthus, Folken &amp; DNB Arena.</p>
       </header>
 
       <SourceStatus sources={sources} fetchedAt={fetchedAt} onRefresh={refresh} loading={loading} />
