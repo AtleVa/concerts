@@ -21,6 +21,22 @@
   border-color: #5b6ee8;
 }
 
+.filters__month-select {
+  flex-shrink: 0;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #2a2f4a;
+  background: #171b2d;
+  color: #f2f3f7;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.filters__month-select:focus {
+  outline: none;
+  border-color: #5b6ee8;
+}
+
 .filters__top {
   display: flex;
   align-items: center;

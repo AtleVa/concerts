@@ -69,4 +69,11 @@ async function getAggregatedEvents({ forceRefresh = false } = {}) {
   return fresh;
 }
 
-module.exports = { getAggregatedEvents, SOURCES };
+/** Seconds until the current cached result expires, or 0 if nothing is cached. */
+function getCacheRemainingSeconds() {
+  const expiresAt = cache.getTtl(CACHE_KEY); // epoch ms, or 0/undefined if absent
+  if (!expiresAt) return 0;
+  return Math.max(0, Math.round((expiresAt - Date.now()) / 1000));
+}
+
+module.exports = { getAggregatedEvents, getCacheRemainingSeconds, SOURCES };

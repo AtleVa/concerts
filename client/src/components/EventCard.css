@@ -1,6 +1,7 @@
 .event-card {
   display: flex;
   flex-direction: column;
+  position: relative;
   background: #1b1f33;
   border: 1px solid #2a2f4a;
   border-radius: 14px;
@@ -80,6 +81,45 @@
   overflow: hidden;
 }
 
+/* Prominent date badge, overlaid on the poster in grid view. */
+.event-card__date-badge {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 3rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+  background: rgba(15, 18, 32, 0.85);
+  border: 1px solid rgba(91, 110, 232, 0.5);
+  backdrop-filter: blur(2px);
+  line-height: 1.05;
+}
+
+.event-card__date-badge-weekday {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8ea2ff;
+}
+
+.event-card__date-badge-day {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.event-card__date-badge-month {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #d3d7f5;
+}
+
 /* List view: compact horizontal row with a small thumbnail. */
 .event-card--list {
   flex-direction: row;
@@ -115,4 +155,18 @@
 
 .event-card--list .event-card__description {
   display: none;
+}
+
+.event-card--list .event-card__date-badge {
+  position: static;
+  flex-direction: row;
+  gap: 0.35rem;
+  min-width: 0;
+  margin-right: 0.75rem;
+  padding: 0.25rem 0.55rem;
+  order: -1;
+}
+
+.event-card--list .event-card__date-badge-day {
+  font-size: 1rem;
 }

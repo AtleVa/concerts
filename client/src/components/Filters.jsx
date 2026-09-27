@@ -8,6 +8,9 @@ export default function Filters({
   onToggleVenue,
   viewMode,
   onViewModeChange,
+  months,
+  selectedMonth,
+  onMonthChange,
 }) {
   return (
     <div className="filters">
@@ -19,6 +22,19 @@ export default function Filters({
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
+        <select
+          className="filters__month-select"
+          value={selectedMonth}
+          onChange={(e) => onMonthChange(e.target.value)}
+          aria-label="Filter by month"
+        >
+          <option value="">All dates</option>
+          {months.map((m) => (
+            <option key={m.key} value={m.key}>
+              {m.label}
+            </option>
+          ))}
+        </select>
         <div className="filters__view-toggle" role="group" aria-label="Choose view">
           <button
             type="button"
