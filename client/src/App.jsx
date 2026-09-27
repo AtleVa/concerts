@@ -5,10 +5,26 @@ import Filters from './components/Filters';
 import SourceStatus from './components/SourceStatus';
 import './App.css';
 
+const VIEW_MODE_KEY = 'concerts:viewMode';
+
+function getInitialViewMode() {
+  if (typeof window === 'undefined') return 'grid';
+  const stored = window.localStorage.getItem(VIEW_MODE_KEY);
+  return stored === 'list' ? 'list' : 'grid';
+}
+
 export default function App() {
   const { events, sources, fetchedAt, loading, error, refresh } = useConcertEvents();
   const [search, setSearch] = useState('');
   const [activeVenues, setActiveVenues] = useState(new Set());
+  const [viewMode, setViewMode] = useState(getInitialViewMode);
+
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(VIEW_MODE_KEY, mode);
+    }
+  };
 
   const venues = useMemo(
     () => [...new Set(events.map((e) => e.venue || e.sourceName))].sort(),
@@ -49,6 +65,8 @@ export default function App() {
         venues={venues}
         activeVenues={activeVenues}
         onToggleVenue={toggleVenue}
+        viewMode={viewMode}
+        onViewModeChange={handleViewModeChange}
       />
 
       {error && <div className="app__error">Couldn't load concerts: {error}</div>}
@@ -59,9 +77,9 @@ export default function App() {
         <div className="app__status">No concerts match your filters.</div>
       )}
 
-      <div className="app__grid">
+      <div className={`app__grid app__grid--${viewMode}`}>
         {filteredEvents.map((event) => (
-          <EventCard key={event.id} event={event} />
+          <EventCard key={event.id} event={event} viewMode={viewMode} />
         ))}
       </div>
     </div>

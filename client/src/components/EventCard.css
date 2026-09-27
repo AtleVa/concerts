@@ -79,3 +79,40 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* List view: compact horizontal row with a small thumbnail. */
+.event-card--list {
+  flex-direction: row;
+  align-items: center;
+}
+
+.event-card--list .event-card__image-wrap {
+  width: 90px;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+}
+
+.event-card--list .event-card__body {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.75rem;
+  padding: 0.65rem 1rem;
+}
+
+.event-card--list .event-card__venue {
+  flex-basis: 100%;
+}
+
+.event-card--list .event-card__title {
+  flex: 1 1 auto;
+  min-width: 160px;
+}
+
+.event-card--list .event-card__date {
+  white-space: nowrap;
+}
+
+.event-card--list .event-card__description {
+  display: none;
+}

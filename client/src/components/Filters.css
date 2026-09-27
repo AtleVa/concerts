@@ -6,7 +6,8 @@
 }
 
 .filters__search {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   padding: 0.75rem 1rem;
   border-radius: 10px;
   border: 1px solid #2a2f4a;
@@ -18,6 +19,45 @@
 .filters__search:focus {
   outline: none;
   border-color: #5b6ee8;
+}
+
+.filters__top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filters__view-toggle {
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid #2a2f4a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.filters__view-btn {
+  padding: 0.65rem 0.9rem;
+  border: none;
+  background: #171b2d;
+  color: #b7bee0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.filters__view-btn:not(:last-child) {
+  border-right: 1px solid #2a2f4a;
+}
+
+.filters__view-btn:hover {
+  background: #1f253d;
+}
+
+.filters__view-btn--active {
+  background: #5b6ee8;
+  color: #fff;
 }
 
 .filters__venues {

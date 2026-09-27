@@ -17,11 +17,16 @@ function formatDate(iso) {
   }
 }
 
-export default function EventCard({ event }) {
+export default function EventCard({ event, viewMode = 'grid' }) {
   const formattedDate = formatDate(event.date);
 
   return (
-    <a className="event-card" href={event.url} target="_blank" rel="noreferrer">
+    <a
+      className={`event-card event-card--${viewMode}`}
+      href={event.url}
+      target="_blank"
+      rel="noreferrer"
+    >
       <div className="event-card__image-wrap">
         {event.image ? (
           <img className="event-card__image" src={event.image} alt="" loading="lazy" />
