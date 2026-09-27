@@ -88,7 +88,7 @@ export default function App() {
         <h1>Concerts in Stavanger</h1>
         <p>Live-aggregated concert listings from Stavangeren, Fiskepiren, Checkpoint Charlie, TOU, Stavanger konserthus, Folken &amp; DNB Arena.</p>
         <p className="app__contact">
-          Contact: Atle Vatland — <a href="mailto:atle@vatland.no">atle@vatland.no</a>
+          Suggestion? Contact Atle Vatland — <a href="mailto:atle@vatland.no">atle@vatland.no</a>
         </p>
       </header>
 
