@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
-const { getAggregatedEvents, getCacheRemainingSeconds, SOURCES } = require('./aggregator');
+const { getAggregatedEvents, startScheduledRefresh, SOURCES } = require('./aggregator');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -30,11 +30,8 @@ app.get('/api/events', async (req, res) => {
   try {
     const forceRefresh = req.query.refresh === '1' || req.query.refresh === 'true';
     const data = await getAggregatedEvents({ forceRefresh });
-    // Mirror the server-side aggregation cache (30 min) as an HTTP
-    // Cache-Control header, so browsers/CDNs can reuse the same response
-    // without hitting the App Service again until it's actually stale.
-    const maxAge = forceRefresh ? 0 : getCacheRemainingSeconds();
-    res.set('Cache-Control', `public, max-age=${maxAge}`);
+    // Browsers revalidate (cheap 304 via ETag) so a refresh by anyone shows up immediately.
+    res.set('Cache-Control', 'public, no-cache');
     res.json(data);
   } catch (err) {
     console.error('Failed to aggregate events:', err);
@@ -50,4 +47,7 @@ if (hasClientBuild) {
 
 app.listen(PORT, () => {
   console.log(`Concert aggregator API listening on http://localhost:${PORT}`);
+  startScheduledRefresh();
 });
+
+

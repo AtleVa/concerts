@@ -8,10 +8,12 @@ const folken = require('./sources/folken');
 const dnbArena = require('./sources/dnb-arena');
 
 const SOURCES = [stavangeren, fiskepiren, checkpointCharlie, tou, stavangerKonserthus, folken, dnbArena];
-const CACHE_TTL_SECONDS = 30 * 60; // refresh at most every 30 minutes
+const REFRESH_HOUR = 8; // daily scheduled refresh, local time in REFRESH_TZ
+const REFRESH_TZ = process.env.REFRESH_TZ || 'Europe/Oslo';
 const CACHE_KEY = 'aggregated-events';
 
-const cache = new NodeCache({ stdTTL: CACHE_TTL_SECONDS, checkperiod: 60 });
+// No TTL: the cache lives until the 08:00 refresh or a manual refresh.
+const cache = new NodeCache({ stdTTL: 0, useClones: false });
 
 /**
  * Fetches events from every configured source in parallel. A failure in one
@@ -69,11 +71,41 @@ async function getAggregatedEvents({ forceRefresh = false } = {}) {
   return fresh;
 }
 
-/** Seconds until the current cached result expires, or 0 if nothing is cached. */
-function getCacheRemainingSeconds() {
-  const expiresAt = cache.getTtl(CACHE_KEY); // epoch ms, or 0/undefined if absent
-  if (!expiresAt) return 0;
-  return Math.max(0, Math.round((expiresAt - Date.now()) / 1000));
+function zonedParts(date) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: REFRESH_TZ, hourCycle: 'h23',
+    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit',
+  }).formatToParts(date);
+  const p = Object.fromEntries(parts.map((x) => [x.type, Number(x.value)]));
+  return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
 }
 
-module.exports = { getAggregatedEvents, getCacheRemainingSeconds, SOURCES };
+/** Milliseconds until the next REFRESH_HOUR:00 in REFRESH_TZ. */
+function msUntilNextRefresh(now = new Date()) {
+  const local = zonedParts(now);
+  const d = new Date(local);
+  let target = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), REFRESH_HOUR);
+  if (target <= local) target += 24 * 60 * 60 * 1000;
+  return target - local;
+}
+
+/** Seconds until the next scheduled refresh. */
+function getCacheRemainingSeconds() {
+  return Math.round(msUntilNextRefresh() / 1000);
+}
+
+/** Warms the cache now and re-fetches every day at REFRESH_HOUR. */
+function startScheduledRefresh() {
+  const run = () => getAggregatedEvents({ forceRefresh: true }).catch((e) => console.error('Scheduled refresh failed:', e));
+  const schedule = () => {
+    const t = setTimeout(async () => {
+      await run();
+      schedule();
+    }, msUntilNextRefresh());
+    t.unref();
+  };
+  run();
+  schedule();
+}
+
+module.exports = { getAggregatedEvents, getCacheRemainingSeconds, startScheduledRefresh, SOURCES };
