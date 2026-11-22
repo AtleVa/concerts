@@ -1,3 +1,7 @@
+// Source sites publish Norwegian wall-clock times; parse them as such even
+// when the host (e.g. Azure App Service) runs in UTC. Must precede any Date use.
+process.env.TZ = process.env.APP_TZ || 'Europe/Oslo';
+
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
