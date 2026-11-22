@@ -7,7 +7,9 @@ const stavangerKonserthus = require('./sources/stavanger-konserthus');
 const folken = require('./sources/folken');
 const dnbArena = require('./sources/dnb-arena');
 
-const SOURCES = [stavangeren, fiskepiren, checkpointCharlie, tou, stavangerKonserthus, folken, dnbArena];
+const rogalandTeater = require('./sources/rogaland-teater');
+
+const SOURCES = [stavangeren, fiskepiren, checkpointCharlie, tou, stavangerKonserthus, folken, dnbArena, rogalandTeater];
 const REFRESH_HOUR = 8; // daily scheduled refresh, local time in REFRESH_TZ
 const REFRESH_TZ = process.env.REFRESH_TZ || 'Europe/Oslo';
 const CACHE_KEY = 'aggregated-events';
